@@ -156,6 +156,9 @@ func main() {
 					maxconcurrency, regionRange(regions), len(regions), r.Rate.Remaining, r.Rate.Limit)
 
 				jobs = append(jobs, j.Jobs...)
+				if j.TotalCount != nil && len(jobs) == *j.TotalCount {
+					break
+				}
 			}
 		}
 
