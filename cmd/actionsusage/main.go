@@ -17,7 +17,7 @@ import (
 
 var (
 	repos    = flag.String("repos", "", "List of repositories, separated by commas. E.g. namespacelabs/foundation")
-	runCount = flag.Int("run_count", 10, "Maximum number of runs to consider per repo.")
+	runCount = flag.Int("run_count", 1000, "Maximum number of runs to consider per repo.")
 	maxJobs  = flag.Int("max_jobs", 1000, "Max jobs per run.")
 )
 
