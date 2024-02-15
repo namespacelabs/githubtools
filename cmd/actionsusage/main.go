@@ -58,9 +58,11 @@ func main() {
 					break
 				}
 
-				log.Printf("%s: got %d runs (total: %d rate_limit: %d/%d)",
-					reponame, len(runs.WorkflowRuns), len(ws), r.Rate.Remaining, r.Rate.Limit)
 				ws = append(ws, runs.WorkflowRuns...)
+				log.Printf("%s: got %d runs (total: %d rate_limit: %d/%d from: %v to %v)",
+					reponame, len(runs.WorkflowRuns), len(ws), r.Rate.Remaining, r.Rate.Limit,
+					ws[0].CreatedAt.Time.Format(time.RFC3339), ws[len(ws)-1].CreatedAt.Time.Format(time.RFC3339),
+				)
 				if len(ws) >= *runCount {
 					break
 				}
@@ -103,7 +105,7 @@ func main() {
 						continue
 					}
 
-					totalminutes += int64(math.Ceil(job.CompletedAt.Time.Sub(job.StartedAt.Time).Seconds()))
+					totalminutes += int64(math.Ceil(job.CompletedAt.Time.Sub(job.StartedAt.Time).Seconds() / 60))
 
 					jobregion := Region{
 						Start: job.StartedAt.UnixMilli(),
